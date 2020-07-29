@@ -23,7 +23,6 @@ def be_aesthetic():
 
     # well need to wrap long texts
     wrapped_inspo = textwrap.wrap(inspo['content'], 50)
-    author = f"- {inspo['author']}"
 
     img = Image.open(BytesIO(image))
     font = ImageFont.truetype('Caveat-Regular.ttf', 40)
@@ -35,16 +34,18 @@ def be_aesthetic():
     base_y = random.randint(50, 550 - 45 * len(wrapped_inspo) - 45)
     draw.rectangle([(0, 0), (800, 600)], (0, 0, 0, 125))
     draw.text((50, base_y), "\n".join(wrapped_inspo), fill=color, font=font)
-    draw.text((350, base_y + 45 * len(wrapped_inspo)), author, fill=color, font=font)
+    draw.text((350, base_y + 45 * len(wrapped_inspo)), f"- {inspo['author']}", fill=color, font=font)
 
     img.save('aesthetic.jpg')
 
-def share_inspo():
+    return inspo['author']
+
+def share_inspo(author):
     twitter_auth_keys = { 
-        "consumer_key"        : "uthink",
-        "consumer_secret"     : "ill",
-        "access_token"        : "upload",
-        "access_token_secret" : "these?"
+        "consumer_key"        : "Not",
+        "consumer_secret"     : "gonna",
+        "access_token"        : "happen",
+        "access_token_secret" : "lol"
     }
  
     auth = tweepy.OAuthHandler(
@@ -58,11 +59,12 @@ def share_inspo():
     api = tweepy.API(auth)
 
     print("Tweeting")
+    author = author.replace(" ", "").replace("'", "")
     media = api.media_upload("aesthetic.jpg")
-    api.update_status(media_ids=[media.media_id])
+    api.update_status(media_ids=[media.media_id], status=f"#inspiration #quote #{author}")
 
 def main():
-    be_aesthetic()
-    share_inspo()
+    author = be_aesthetic()
+    share_inspo(author)
 
 main()  
