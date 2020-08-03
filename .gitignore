@@ -1,2 +1,5 @@
 .vscode
-virtualenv
+venv
+*.auto.tfvars
+dist/*
+.terraform

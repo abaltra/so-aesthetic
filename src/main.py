@@ -1,4 +1,5 @@
 import requests
+import os
 from io import BytesIO
 from PIL import Image, ImageFont, ImageDraw
 import textwrap
@@ -36,35 +37,34 @@ def be_aesthetic():
     draw.text((50, base_y), "\n".join(wrapped_inspo), fill=color, font=font)
     draw.text((350, base_y + 45 * len(wrapped_inspo)), f"- {inspo['author']}", fill=color, font=font)
 
-    img.save('aesthetic.jpg')
+    img.save('/tmp/aesthetic.jpg')
 
     return inspo['author']
 
 def share_inspo(author):
-    twitter_auth_keys = { 
-        "consumer_key"        : "Not",
-        "consumer_secret"     : "gonna",
-        "access_token"        : "happen",
-        "access_token_secret" : "lol"
-    }
- 
     auth = tweepy.OAuthHandler(
-            twitter_auth_keys['consumer_key'],
-            twitter_auth_keys['consumer_secret']
+            os.getenv("TWITTER_CONSUMER_KEY"),
+            os.getenv("TWITTER_CONSUMER_SECRET")
             )
     auth.set_access_token(
-            twitter_auth_keys['access_token'],
-            twitter_auth_keys['access_token_secret']
+            os.getenv("TWITTER_ACCESS_TOKEN"),
+            os.getenv("TWITTER_ACCESS_TOKEN_SECRET")
             )
     api = tweepy.API(auth)
 
     print("Tweeting")
     author = author.replace(" ", "").replace("'", "")
-    media = api.media_upload("aesthetic.jpg")
+    media = api.media_upload("/tmp/aesthetic.jpg")
     api.update_status(media_ids=[media.media_id], status=f"#inspiration #quote #{author}")
 
-def main():
+def clean():
+        print("Forgetting")
+        os.remove("/tmp/aesthetic.jpg")
+
+def handler(event, context):
     author = be_aesthetic()
     share_inspo(author)
 
-main()  
+if __name__ == "__main__":
+    print("Running locally")
+    handler()

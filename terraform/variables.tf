@@ -1,0 +1,4 @@
+variable "TWITTER_CONSUMER_KEY" {}
+variable "TWITTER_CONSUMER_SECRET" {}
+variable "TWITTER_ACCESS_TOKEN" {}
+variable "TWITTER_ACCESS_TOKEN_SECRET" {}
