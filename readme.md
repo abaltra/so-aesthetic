@@ -4,6 +4,15 @@ Simple script that will get a random image, slap a random quote on top and share
 
 ## How to use
 
+First of all you'll need Twitter API creds to put in your `terraform/env.auto.tfvars` file. The required vars are:
+
+```shell
+TWITTER_CONSUMER_KEY = "pls"
+TWITTER_CONSUMER_SECRET = "add"
+TWITTER_ACCESS_TOKEN = "your"
+TWITTER_ACCESS_TOKEN_SECRET = "creds"
+```
+
 There's a simple to use Makefile with 4 instructions. Super creative name for all of them.
 
 ```shell
