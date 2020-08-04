@@ -13,6 +13,7 @@ deploy:
 	terraform init terraform; \
 	terraform apply -var-file=terraform/env.auto.tfvars terraform;
 
-
 clean:
 	rm -rf dist/*
+
+all: build deploy clean
