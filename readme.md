@@ -2,6 +2,8 @@
 
 Simple script that will get a random image, slap a random quote on top and share it on twitter. Runs daily as a lambda triggered by a Cloudwatch rule in AWS. All terraformed.
 
+You should [follow the bot on twitter](https://twitter.com/roboinspo) and get that sweet sweet inspo
+
 ## How to use
 
 First of all you'll need Twitter API creds to put in your `terraform/env.auto.tfvars` file. The required vars are:
